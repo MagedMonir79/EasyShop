@@ -11,8 +11,7 @@ import { supabase } from '@/utils/supabaseClient'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 
-const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
-import shoppingAnimation from '@/lottie/shopping.json'
+const LottieSection = dynamic(() => import('@/components/LottieSection'), { ssr: false })
 
 export default function HomePage() {
   const router = useRouter()
@@ -29,21 +28,17 @@ export default function HomePage() {
   useEffect(() => {
     const checkSession = async () => {
       if (!supabase) return
-
       const {
         data: { session },
       } = await supabase.auth.getSession()
-
       if (!session) {
         router.push('/login')
       } else {
         const { user } = session
         setUserName(user.email?.split('@')[0] || 'User')
       }
-
       setLoading(false)
     }
-
     checkSession()
   }, [router])
 
@@ -63,7 +58,6 @@ export default function HomePage() {
           <img src="/logo.png" alt="EasyShop Logo" className="h-8 w-8 object-contain" />
           <h1 className="text-xl font-bold text-blue-700">EasyShop</h1>
         </div>
-
         <div className="flex items-center gap-4">
           <input
             type="text"
@@ -171,12 +165,8 @@ export default function HomePage() {
         ))}
       </section>
 
-      {/* Lottie Animation */}
-      <section className="px-6 py-10 bg-blue-50 flex justify-center items-center">
-        <div className="w-60">
-          <Lottie animationData={shoppingAnimation} loop autoplay />
-        </div>
-      </section>
+      {/* Lottie Section */}
+      <LottieSection />
 
       {/* Shopping Tips */}
       <section className="px-6 py-10 bg-blue-50">

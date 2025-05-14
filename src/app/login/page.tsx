@@ -22,6 +22,12 @@ export default function LoginPage() {
     setSuccessMessage(null);
     setLoading(true);
 
+    if (!supabase) {
+      setError('Supabase not initialized');
+      setLoading(false);
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -46,6 +52,11 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = async () => {
+    if (!supabase) {
+      setError('Supabase not initialized');
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
