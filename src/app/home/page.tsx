@@ -1,9 +1,5 @@
 'use client'
 
-export const metadata = {
-  title: 'Home',
-  description: 'EasyShop Home Page'
-}
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
