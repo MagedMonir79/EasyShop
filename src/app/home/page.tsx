@@ -1,10 +1,14 @@
 'use client'
-import shoppingAnimation from '@/lottie/shopping.json'
+
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/utils/supabaseClient'
 import { motion } from 'framer-motion'
-import Lottie from 'lottie-react'
+import dynamic from 'next/dynamic'
+
+// تحميل Lottie بشكل ديناميكي علشان ما يشتغلش على السيرفر
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
+import shoppingAnimation from '@/lottie/shopping.json'
 
 export default function HomePage() {
   const router = useRouter()
@@ -33,7 +37,7 @@ export default function HomePage() {
     }
 
     checkSession()
-  }, [])
+  }, [router])
 
   if (loading) {
     return (
@@ -70,7 +74,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* بانر بصور قابلة للتغيير */}
+      {/* بانر */}
       <section
         className="relative h-[250px] bg-cover bg-center text-white flex items-center justify-center mb-6"
         style={{
@@ -83,7 +87,7 @@ export default function HomePage() {
         </h2>
       </section>
 
-      {/* سلايدر بسيط أو إعلان */}
+      {/* إعلان بسيط */}
       <section className="px-6 mb-10">
         <div className="overflow-hidden rounded-lg shadow-lg">
           <motion.div
@@ -98,7 +102,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* قسم Best Sellers */}
+      {/* Best Sellers */}
       <section className="px-6 py-6">
         <h3 className="text-xl font-bold mb-4 text-green-700">🔥 Best Sellers</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -166,7 +170,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* قسم نصائح */}
+      {/* Shopping Tips */}
       <section className="px-6 py-10 bg-blue-50">
         <h3 className="text-2xl font-bold text-blue-700 mb-6">Shopping Tips</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
