@@ -1,12 +1,16 @@
 'use client'
 
+export const metadata = {
+  title: 'Home',
+  description: 'EasyShop Home Page'
+}
+
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/utils/supabaseClient'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 
-// تحميل Lottie بشكل ديناميكي علشان ما يشتغلش على السيرفر
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 import shoppingAnimation from '@/lottie/shopping.json'
 
@@ -16,12 +20,16 @@ export default function HomePage() {
   const [userName, setUserName] = useState<string | null>(null)
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
+    if (supabase) {
+      await supabase.auth.signOut()
+    }
     router.push('/login')
   }
 
   useEffect(() => {
     const checkSession = async () => {
+      if (!supabase) return
+
       const {
         data: { session },
       } = await supabase.auth.getSession()
