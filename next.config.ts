@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    domains: ['images.unsplash.com'], // لازم يكون الدومين اللي الصور بتيجي منه
+  },
+}
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-export default nextConfig;
+export default nextConfig
